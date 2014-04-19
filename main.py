@@ -17,7 +17,7 @@ cloudflare_list = [
 '198.41.128.0/17',
 '162.158.0.0/15',
 '104.16.0.0/12']
-
+ips = []
 #Parse dump.xml RosComNadzor
 tree = ET.parse('dump.xml')
 root = tree.getroot()
@@ -26,4 +26,8 @@ root = tree.getroot()
 for child in root:
    for ip_item in cloudflare_list:
         if child.find('ip').text in IpRange(ip_item):
+            print(child.find('ip').text)
+            ips.append(child.find('ip').text)
             print(['CloudFlare DNS: '+ ip_item,child.attrib['id'],child.find('domain').text,child.find('ip').text])
+print('IP Адреса: ',list(set(ips)))
+print('IP Адресов CloudFlare: ',len(list(set(ips))) )
